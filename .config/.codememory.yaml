@@ -1,0 +1,5 @@
+environment:
+  pathWithFile: null
+  filename: .env
+  defaultAppMode: dev
+  useCache: false
