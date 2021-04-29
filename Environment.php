@@ -183,7 +183,7 @@ class Environment
 
         $env = self::all();
 
-        if (self::$cache->exist(self::CACHE_TYPE, self::CACHE_NAME)) {
+        if (!is_array(self::$cache) && self::$cache->exist(self::CACHE_TYPE, self::CACHE_NAME)) {
             $env = self::$cache->get(self::CACHE_TYPE, self::CACHE_NAME);
         }
 
