@@ -10,11 +10,11 @@
     ],
     "require": {
         "sensiolabs/ansi-to-html": "^1.2",
-        "codememory/fs": "^1.0",
-        "codememory/support": "^1.0",
-        "codememory/caching": "^1.0",
-        "codememory/console": "^1.0",
-        "codememory/global-config": "^1.0"
+        "codememory/fs": "1.1.2",
+        "codememory/support": "1.2.1",
+        "codememory/caching": "1.1.1",
+        "codememory/console": "1.0.3",
+        "codememory/global-config": "1.1.1"
     },
     "autoload": {
         "psr-4": {
