@@ -2,6 +2,7 @@
 
 namespace Codememory\Components\Environment\Commands;
 
+use Codememory\Components\Caching\Cache;
 use Codememory\Components\Caching\Exceptions\ConfigPathNotExistException;
 use Codememory\Components\Console\Command;
 use Codememory\Components\Environment\Environment;
@@ -63,6 +64,16 @@ class UpdateEnvCacheCommand extends Command
         $json = new JsonParser();
 
         Environment::__constructStatic($filesystem);
+
+        if(!GlobalConfig::get('environment.useCache')) {
+            $this->io->error([
+                'Disabled caching mode for environment changes.',
+                'Go to the global configuration (.config/.codememory.yaml) and set the environment -> useCache section to true'
+            ]);
+
+            return Command::FAILURE;
+        }
+
         Environment::$cache->create(
             Environment::CACHE_TYPE,
             Environment::CACHE_NAME,
