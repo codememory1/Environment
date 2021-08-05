@@ -3,10 +3,10 @@
 namespace Codememory\Components\Environment;
 
 use Codememory\Components\Caching\Cache;
+use Codememory\Components\Caching\Exceptions\ConfigPathNotExistException;
 use Codememory\Components\Console\ResourcesCommand;
 use Codememory\Components\Console\Running;
 use Codememory\Components\Environment\Commands\UpdateEnvCacheCommand;
-use Codememory\Components\Environment\Exceptions\IncorrectPathToEnviException;
 use Codememory\Components\GlobalConfig\GlobalConfig;
 use Codememory\Components\Markup\Types\YamlType;
 use Codememory\FileSystem\Interfaces\FileInterface;
@@ -16,6 +16,7 @@ use Exception;
 
 /**
  * Class Environment
+ *
  * @package Codememory\Components\Environment
  *
  * @author  Codememory
@@ -59,10 +60,10 @@ class Environment
      *
      * @param FileInterface $filesystem
      *
+     * @throws ConfigPathNotExistException
      * @throws Exceptions\EnvironmentVariableNotFoundException
      * @throws Exceptions\ParsingErrorException
      * @throws Exceptions\VariableParsingErrorException
-     * @throws IncorrectPathToEnviException
      */
     public static function __constructStatic(FileInterface $filesystem)
     {
@@ -341,10 +342,10 @@ class Environment
      * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
      * @return void
+     * @throws ConfigPathNotExistException
      * @throws Exceptions\EnvironmentVariableNotFoundException
      * @throws Exceptions\ParsingErrorException
      * @throws Exceptions\VariableParsingErrorException
-     * @throws IncorrectPathToEnviException
      */
     private static function run(): void
     {
@@ -367,7 +368,7 @@ class Environment
      * <=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=<=
      *
      * @return Environment
-     * @throws IncorrectPathToEnviException
+     * @throws ConfigPathNotExistException
      */
     private static function readingEnv(): Environment
     {
@@ -379,7 +380,7 @@ class Environment
         }
 
         if (!self::$filesystem->exist(self::$pathToEnv . self::$filename)) {
-            throw new IncorrectPathToEnviException();
+            return new static();
         }
 
         self::$envString = self::$filesystem->reader
